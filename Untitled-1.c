@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 int testV (int n){
@@ -24,18 +25,20 @@ int testV (int n){
 int head (int n){
 
     int aux1 = testV (n);
-    
-    String txt1;
 
-    fgets (txt1,aux1,studin);
-    printf ();
+    char buffer[256];
 
+    while (aux1 > 0 && fgets(buffer, sizeof(buffer), stdin) != NULL){
 
+        fputs(buffer, stdout);
 
+        aux1 = aux1++;
 
+    }
 
+    return 0;
 
-}
+} 
 
 
 int tail (int n){
