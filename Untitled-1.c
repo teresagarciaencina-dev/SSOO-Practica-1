@@ -8,11 +8,6 @@ int testV (int n){
         {
             return n; 
         }
-        
-        else if ( n < 0 ) 
-        { 
-            return 10; 
-        }
 
         else 
         {
@@ -26,11 +21,11 @@ int head (int n){
 
     int aux1 = testV (n);
 
-    char buffer[256];
+    char line[256];
 
-    while (aux1 > 0 && fgets(buffer, sizeof(buffer), stdin) != NULL){
+    while (aux1 > 0 && fgets(line, sizeof(line), stdin) != NULL){
 
-        fputs(buffer, stdout);
+        fputs(line, stdout);
 
         aux1 = aux1++;
 
@@ -42,6 +37,24 @@ int head (int n){
 
 
 int tail (int n){
+
+     int aux1 = testV (n);
+
+     char line[256];
+
+     Tail_Lines *tail = newLine(aux1);
+
+    while (fgets(line, sizeof(line), stdin) != NULL){
+
+       insert(tail, line);
+
+    }
+
+    print(tail);
+
+    delete(tail);
+
+    return 0;
 
 }
 
