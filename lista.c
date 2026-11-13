@@ -58,8 +58,6 @@ Node *newNode(const char *str) {
     return node;
 }
 
-
-
 int order_insert(Lines *list, const char *str) {
 
     Node *node;
