@@ -4,7 +4,7 @@
 
 typedef struct Node {
     char *str;
-    int *length;
+    int length;
     struct Node *next;
     struct Node *prev;
 } Node;
@@ -33,6 +33,10 @@ Lines *newLines(void) {
 
 Node *newNode(const char *str) {
 
+    if (str == NULL) {
+    return NULL;
+    }
+
     Node *node;
 
     node = malloc(sizeof(Node));
@@ -58,13 +62,59 @@ Node *newNode(const char *str) {
     return node;
 }
 
-int order_insert(Lines *list, const char *str) {
+int deleteLast(Lines *list) {
+
+    Node *aux;
+
+    if (list == NULL || (*list).last == NULL) {
+        return 0;
+    }
+
+    aux = (*list).last;
+
+    (*list).last = (*aux).prev;
+
+    if ((*list).last != NULL) {
+
+        (*(*list).last).next = NULL;
+
+    }
+    else {
+
+        (*list).first = NULL;
+
+    }
+
+    free((*aux).str);
+    free(aux);
+
+    (*list).total--;
+
+    return 1;
+}
+
+int order_insert(Lines *list, const char *str, const int limit) {
 
     Node *node;
     Node *aux;
+    int length;
 
     if (list == NULL || str == NULL) {
         return 0;
+    }
+
+     length = strlen(str);
+
+
+    if ((*list).total >= limit) {
+
+        if (length <= (*(*list).last).length) {
+            return 1;
+        }
+    }
+
+        if ((*list).total >= limit) {
+        deleteLast(list);
     }
 
     node = newNode(str);
@@ -74,7 +124,7 @@ int order_insert(Lines *list, const char *str) {
         return 0;
     }
 
-   while (aux != NULL && strcmp(str, (*aux).str) > 0)
+   while (aux != NULL && length < (*aux).length)
     {
       aux=(*aux).next;  
     }
@@ -115,4 +165,108 @@ int order_insert(Lines *list, const char *str) {
     
     (*list).total++;
     return 1;
+}
+
+int insert(Lines *list, const char *str) {
+
+    Node *node;
+
+    if (list == NULL || str == NULL) {
+        return 0;
+    }
+
+    node = newNode(str);
+
+    if (node == NULL) {
+        return 0;
+    }
+
+    (*node).prev = (*list).last;
+
+    if ((*list).last != NULL) {
+
+        (*(*list).last).next = node;
+
+    }
+    else {
+
+        (*list).first = node;
+
+    }
+
+    (*list).last = node;
+
+    (*list).total++;
+
+    return 1;
+}
+
+
+
+void deleteLines(Lines *list) {
+
+    Node *aux;
+
+    if (list == NULL) {
+        return;
+    }
+
+    while ((*list).first != NULL) {
+
+        aux = (*list).first;
+
+        (*list).first = (*(*list).first).next;
+
+        free((*aux).str);
+
+        free(aux);
+
+    }
+
+    (*list).last = NULL;
+    (*list).total = 0;
+
+    free(list);
+}
+
+int deleteFirst(Lines *list) {
+
+    Node *aux;
+
+    if (list == NULL || (*list).first == NULL) {
+        return 0;
+    }
+
+    aux = (*list).first;
+    (*list).first = (*aux).next;
+
+    if ((*list).first != NULL) {
+        (*(*list).first).prev = NULL;
+    }
+    else {
+        (*list).last = NULL;
+    }
+
+    free((*aux).str);
+    free(aux);
+
+    (*list).total--;
+
+    return 1;
+}
+
+void printLines(Lines *list) {
+
+    Node *aux;
+
+    if (list == NULL) {
+        return;
+    }
+
+    aux = (*list).first;
+
+    while (aux != NULL) {
+        printf("%s", (*aux).str);
+        aux = (*aux).next;
+    }
 }
