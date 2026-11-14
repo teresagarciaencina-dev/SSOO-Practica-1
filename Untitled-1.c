@@ -61,6 +61,37 @@ int tail (int n){
 
 int longlines(int n){
 
+    int valid_n = testV(n);
+
+
+    Lines *list = newLines();
+    if (list == NULL) {
+        return -1;
+    }
+
+    char buffer[1024];
+    int count = 0;
+
+    while (fgets(buffer, sizeof(buffer), stdin) != NULL) {
+        size_t len = strlen(buffer);
+        
+        int effective_len = (int)len;
+        if (effective_len > 0 && buffer[effective_len - 1] == '\n') {
+            effective_len--;
+        }
+
+        if (effective_len > valid_n) {
+            if (order_insert(list, buffer)) {
+                count++;
+            }
+        }
+    }
+
+    printLines(list);
+
+    deleteLines(list);
+
+    return count;
 
 }
 

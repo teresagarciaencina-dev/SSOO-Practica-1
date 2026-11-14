@@ -116,3 +116,32 @@ int order_insert(Lines *list, const char *str) {
     (*list).total++;
     return 1;
 }
+
+void deleteLines(Lines *list) {
+
+    if (list == NULL) {
+        return;
+    }
+
+    Node *current = (*list).first;
+    while (current != NULL) {
+        Node *next_node = (*current).next;
+        free((*current).str);
+        free(current);
+        current = next_node;
+    }
+    
+    free(list);
+}
+
+void printLines(Lines *list) {
+    if (list == NULL || list->first == NULL) {
+        return;
+    }
+
+    Node *current = list->first;
+    while (current != NULL) {
+        fputs((*current).str, stdout);
+        current = (*current).next;
+    }
+}
