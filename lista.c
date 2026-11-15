@@ -67,7 +67,7 @@ int deleteLast(Lines *list) {
     Node *aux;
 
     if (list == NULL || (*list).last == NULL) {
-        return 0;
+        return 1;
     }
 
     aux = (*list).last;
@@ -90,7 +90,7 @@ int deleteLast(Lines *list) {
 
     (*list).total--;
 
-    return 1;
+    return 0;
 }
 
 int order_insert(Lines *list, const char *str, const int limit) {
@@ -100,7 +100,7 @@ int order_insert(Lines *list, const char *str, const int limit) {
     int length;
 
     if (list == NULL || str == NULL) {
-        return 0;
+        return 1;
     }
 
      length = strlen(str);
@@ -109,7 +109,7 @@ int order_insert(Lines *list, const char *str, const int limit) {
     if ((*list).total >= limit) {
 
         if (length <= (*(*list).last).length) {
-            return 1;
+            return 0;
         }
     }
 
@@ -121,7 +121,7 @@ int order_insert(Lines *list, const char *str, const int limit) {
     aux=(*list).first;
 
     if (node == NULL) {
-        return 0;
+        return 1;
     }
 
    while (aux != NULL && length < (*aux).length)
@@ -164,7 +164,7 @@ int order_insert(Lines *list, const char *str, const int limit) {
     }
     
     (*list).total++;
-    return 1;
+    return 0;
 }
 
 int insert(Lines *list, const char *str) {
@@ -172,13 +172,13 @@ int insert(Lines *list, const char *str) {
     Node *node;
 
     if (list == NULL || str == NULL) {
-        return 0;
+        return 1;
     }
 
     node = newNode(str);
 
     if (node == NULL) {
-        return 0;
+        return 1;
     }
 
     (*node).prev = (*list).last;
@@ -198,7 +198,7 @@ int insert(Lines *list, const char *str) {
 
     (*list).total++;
 
-    return 1;
+    return 0;
 }
 
 
@@ -234,7 +234,7 @@ int deleteFirst(Lines *list) {
     Node *aux;
 
     if (list == NULL || (*list).first == NULL) {
-        return 0;
+        return 1;
     }
 
     aux = (*list).first;
@@ -252,15 +252,15 @@ int deleteFirst(Lines *list) {
 
     (*list).total--;
 
-    return 1;
+    return 0;
 }
 
-void printLines(Lines *list) {
+int printLines(Lines *list) {
 
     Node *aux;
 
     if (list == NULL) {
-        return;
+        return 1;
     }
 
     aux = (*list).first;
@@ -269,4 +269,5 @@ void printLines(Lines *list) {
         printf("%s", (*aux).str);
         aux = (*aux).next;
     }
+    return 0;
 }

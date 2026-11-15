@@ -8,12 +8,16 @@ int main(int argc, char *argv[]) {
     int n = 10;
 
     if (argc < 2 || argc > 3) {
-        fprintf(stderr, "Uso: %s -head|-tail|-longlines [N]\n", argv[0]);
-        return 1;
+        fprintf(stderr, " %s -head|-tail|-longlines [N]\n", argv[0]);
+        return 2;
     }
 
     if (argc == 3) {
         n = atoi(argv[2]);
+        if (n <= 0) {
+        fprintf(stderr, "entrada invalida\n");
+        return 2;}
+        
     }
 
     if (strcmp(argv[1], "-head") == 0) {
@@ -29,5 +33,5 @@ int main(int argc, char *argv[]) {
     }
 
     fprintf(stderr, "Opción no válida\n");
-    return 1;
+    return 2;
 }
