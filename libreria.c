@@ -46,12 +46,10 @@ int tail(int n) {
     Lines *list;
 
      n = testV(n);
-     
+
     if (n <= 0) {
         return 2;
     }
-
-   
 
     list = newLines();
 
@@ -61,7 +59,7 @@ int tail(int n) {
 
     while (fgets(line, sizeof(line), stdin) != NULL) {
 
-        if (insert(list, line) == 0) {
+        if (insert(list, line) != 0) {
             deleteLines(list);
             return 1;
         }
